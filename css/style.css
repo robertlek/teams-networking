@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: blue;
+    color: white;
+}
+
+table tbody {
+    background-color: aliceblue;
+}
+
+table tfoot {
+    background-color: #CCC;
+}
+
+table th, td {
+    border: 1px solid #777;
+    padding: 8px;
+}
+
+table tr:nth-child(even) {
+    background-color: #F2F2F2;
+}

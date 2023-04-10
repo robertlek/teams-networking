@@ -10,36 +10,42 @@
     </head>
 
     <body>
-        <table>
-            <thead>
-                <tr>
-                    <th>Promotion</th>
-                    <th>Members</th>
-                    <th>Project Name</th>
-                    <th>Project URL</th>
-                </tr>
-            </thead>
-
-            <tbody>
-            </tbody>
-            
-            <tfoot>
-                <tr>
-                    <td>
-                        <input type="text" id="promotion" name="promotion" placeholder="Promotion" />
-                    </td>
-                    <td>
-                        <input type="text" id="members" name="members" placeholder="Members" />
-                    </td>
-                    <td>
-                        <input type="text" id="project-name" name="project-name" placeholder="Project Name" />
-                    </td>
-                    <td>
-                        <input type="text" id="project-url" name="project-url" placeholder="Project URL" />
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+        <form id="edit-form" action="" method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Promotion</th>
+                        <th>Members</th>
+                        <th>Project Name</th>
+                        <th>Project URL</th>
+                        <th></th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                </tbody>
+    
+                <tfoot>
+                    <tr>
+                        <td>
+                            <input type="text" id="promotion" name="promotion" placeholder="Promotion" required />
+                        </td>
+                        <td>
+                            <input type="text" id="members" name="members" placeholder="Members" required />
+                        </td>
+                        <td>
+                            <input type="text" id="project-name" name="project-name" placeholder="Project Name" required />
+                        </td>
+                        <td>
+                            <input type="text" id="project-url" name="project-url" placeholder="Project URL" required />
+                        </td>
+                        <td>
+                            <button type="submit">💾</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
 
         <script src="index.js"></script>
     </body>

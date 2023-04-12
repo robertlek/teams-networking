@@ -5,23 +5,24 @@ table {
 }
 
 table thead {
-    background-color: #29A7E1;
+    background-color: #29a7e1;
     color: white;
 }
 
 table tbody {
-    background-color: #D3D3D3;
+    background-color: #d3d3d3;
 }
 
 table tfoot {
-    background-color: #CCC;
+    background-color: #ccc;
 }
 
-table th, td {
+table th,
+td {
     border: 1px solid blue;
     padding: 8px;
 }
 
 table tr:nth-child(even) {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
 }

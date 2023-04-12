@@ -4,8 +4,7 @@ function getTeamsRequest() {
         headers: {
             "Content-Type": "application/json"
         }
-    })
-    .then((response) => {
+    }).then(response => {
         return response.json();
     });
 }
@@ -17,8 +16,7 @@ function createTeamRequest(team) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(team)
-    })
-    .then((r) => r.json());
+    }).then(r => r.json());
 }
 
 function deleteTeamRequest(id) {
@@ -28,8 +26,7 @@ function deleteTeamRequest(id) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({ id })
-    })
-    .then((r) => r.json());
+    }).then(r => r.json());
 }
 
 function deleteTeam(id) {
@@ -74,7 +71,7 @@ function formSubmit(e) {
         url: $("#project-url").value
     };
 
-    createTeamRequest(team).then((status) => {
+    createTeamRequest(team).then(status => {
         console.info("status", status);
         window.location.reload();
     });
@@ -90,7 +87,7 @@ function initEvents() {
     });
 }
 
-getTeamsRequest().then((teams) => {
+getTeamsRequest().then(teams => {
     showTeams(teams);
 });
 

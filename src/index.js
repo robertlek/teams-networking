@@ -104,10 +104,12 @@ function formSubmit(e) {
 }
 
 function searchTeams(search) {
+    search = search.toLowerCase();
     return allTeams.filter(team => {
-        if (team.members.toLowerCase().includes(search.toLowerCase()) === true) {
+        if (team.members.toLowerCase().includes(search)) {
             return true;
-        } else if (team.promotion.toLowerCase().includes(search.toLowerCase()) === true) {
+        }
+        if (team.promotion.toLowerCase().includes(search)) {
             return true;
         }
     });

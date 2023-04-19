@@ -106,14 +106,20 @@ function formSubmit(e) {
 
     if (editId) {
         team.id = editId;
-        updateTeamRequest(team).then(() => {
-            loadTeams();
-            $("#edit-form").reset();
+        updateTeamRequest(team).then(status => {
+            if (status.success) {
+                loadTeams().then(() => {
+                    $("#edit-form").reset();
+                });
+            }
         });
     } else {
-        createTeamRequest(team).then(() => {
-            loadTeams();
-            $("#edit-form").reset();
+        createTeamRequest(team).then(status => {
+            if (status.success) {
+                loadTeams(() => {
+                    $("#edit-form").reset();
+                });
+            }
         });
     }
 }
@@ -154,10 +160,14 @@ function initEvents() {
     });
 }
 
-function loadTeams() {
-    getTeamsRequest().then(teams => {
+function loadTeams(callback) {
+    return getTeamsRequest().then(teams => {
         allTeams = teams;
         showTeams(teams);
+
+        if (typeof callback === "function") {
+            callback();
+        }
     });
 }
 

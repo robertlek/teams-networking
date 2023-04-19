@@ -103,15 +103,15 @@ function formSubmit(e) {
     }
 }
 
-function searchTeams(search) {
+function searchTeams(teams, search) {
     search = search.toLowerCase();
-    return allTeams.filter(team => {
-        if (team.members.toLowerCase().includes(search)) {
-            return true;
-        }
-        if (team.promotion.toLowerCase().includes(search)) {
-            return true;
-        }
+    return teams.filter(team => {
+        return (
+            team.members.toLowerCase().includes(search) ||
+            team.name.toLowerCase().includes(search) ||
+            team.promotion.toLowerCase().includes(search) ||
+            team.url.toLowerCase().includes(search)
+        );
     });
 }
 
@@ -124,7 +124,7 @@ function initEvents() {
 
     $("#search").addEventListener("input", e => {
         const search = e.target.value;
-        const teams = searchTeams(search);
+        const teams = searchTeams(allTeams, search);
         showTeams(teams);
     });
 

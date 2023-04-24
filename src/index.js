@@ -71,15 +71,21 @@ function startEditTeam(id) {
 }
 
 function getTeamsAsHTML(team) {
+    const id = team.id;
+    const url = team.url;
+    let displayURL = url;
+    if (url.startsWith("https://")) {
+        displayURL = url.substring(8);
+    }
     return `
         <tr>
             <td>${team.promotion}</td>
             <td>${team.members}</td>
             <td>${team.name}</td>
-            <td>${team.url}</td>
+            <td><a href="${url}" target="_blank">${displayURL}</a></td>
             <td>
-                <a data-id="${team.id}" class="link-btn remove-btn">✖</a>
-                <a data-id="${team.id}" class="link-btn edit-btn">&#9998;</a>
+                <a data-id="${id}" class="link-btn remove-btn">✖</a>
+                <a data-id="${id}" class="link-btn edit-btn">&#9998;</a>
             </td>
         </tr>
     `;

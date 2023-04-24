@@ -17,6 +17,14 @@ table tfoot {
     background-color: #ccc;
 }
 
+table tfoot input[type="text"] {
+    width: 100%;
+}
+
+table tfoot input:not([type="image" i]) {
+    box-sizing: border-box;
+}
+
 table th,
 td {
     border: 1px solid blue;

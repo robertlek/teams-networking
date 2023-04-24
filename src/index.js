@@ -115,9 +115,17 @@ function formSubmit(e) {
         team.id = editId;
         updateTeamRequest(team).then(status => {
             if (status.success) {
-                loadTeams().then(() => {
-                    $("#edit-form").reset();
-                });
+                allTeams = [...allTeams];
+                var oldTeam = allTeams.find(t => t.id == team.id);
+                oldTeam.promotion = team.promotion;
+                oldTeam.members = team.members;
+                oldTeam.name = team.name;
+                oldTeam.url = team.url;
+                showTeams(allTeams);
+                $("#edit-form").reset();
+                // loadTeams().then(() => {
+                //     $("#edit-form").reset();
+                // });
             }
         });
     } else {

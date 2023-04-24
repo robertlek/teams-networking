@@ -85,12 +85,20 @@ function getTeamsAsHTML(team) {
     `;
 }
 
-let previewDisplayedTeams;
+let previewDisplayedTeams = [];
 
 function showTeams(teams) {
     if (teams === previewDisplayedTeams) {
         console.info("same teams");
         return;
+    }
+
+    if (teams.length === previewDisplayedTeams.length) {
+        var eqContent = teams.every((t, i) => t === previewDisplayedTeams[i]);
+        if (eqContent) {
+            console.warn("same content");
+            return;
+        }
     }
     previewDisplayedTeams = teams;
     const html = teams.map(getTeamsAsHTML);
@@ -115,17 +123,25 @@ function formSubmit(e) {
         team.id = editId;
         updateTeamRequest(team).then(status => {
             if (status.success) {
-                allTeams = [...allTeams];
-                var oldTeam = allTeams.find(t => t.id == team.id);
-                oldTeam.promotion = team.promotion;
-                oldTeam.members = team.members;
-                oldTeam.name = team.name;
-                oldTeam.url = team.url;
-                showTeams(allTeams);
-                $("#edit-form").reset();
+                // allTeams = [...allTeams];
+                // var oldTeam = allTeams.find(t => t.id == team.id);
+                // oldTeam.promotion = team.promotion;
+                // oldTeam.members = team.members;
+                // oldTeam.name = team.name;
+                // oldTeam.url = team.url;
                 // loadTeams().then(() => {
                 //     $("#edit-form").reset();
                 // });
+
+                allTeams = allTeams.map(t => {
+                    if (t.id === team.id) {
+                        return team;
+                    }
+                    return t;
+                });
+
+                showTeams(allTeams);
+                $("#edit-form").reset();
             }
         });
     } else {

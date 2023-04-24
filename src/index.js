@@ -85,7 +85,14 @@ function getTeamsAsHTML(team) {
     `;
 }
 
+let previewDisplayedTeams;
+
 function showTeams(teams) {
+    if (teams === previewDisplayedTeams) {
+        console.info("same teams");
+        return;
+    }
+    previewDisplayedTeams = teams;
     const html = teams.map(getTeamsAsHTML);
     $("table tbody").innerHTML = html.join("");
 }
@@ -116,9 +123,15 @@ function formSubmit(e) {
     } else {
         createTeamRequest(team).then(status => {
             if (status.success) {
-                loadTeams(() => {
-                    $("#edit-form").reset();
-                });
+                team.id = status.id;
+                //allTeams.push(team);
+                allTeams = [...allTeams, team];
+                showTeams(allTeams);
+                $("#edit-form").reset();
+                //
+                // loadTeams(() => {
+                //     $("#edit-form").reset();
+                // });
             }
         });
     }

@@ -60,20 +60,17 @@ function deleteTeam(id) {
     });
 }
 
-function startEditTeam(id) {
-    editId = id;
-    const team = allTeams.find(team => team.id === id);
-    const { promotion } = team;
+function startEditTeam(edit) {
+    editId = edit;
+    const { promotion, members, name, url } = allTeams.find(({ id }) => id === edit);
+
     $("#promotion").value = promotion;
-    $("#members").value = team.members;
-    $("#project-name").value = team.name;
-    $("#project-url").value = team.url;
+    $("#members").value = members;
+    $("#project-name").value = name;
+    $("#project-url").value = url;
 }
 
-function getTeamsAsHTML(team) {
-    const { id, url, promotion } = team;
-    // const id = team.id;
-    // const url = team.url;
+function getTeamsAsHTML({ id, url, promotion, members, name }) {
     let displayURL = url;
     if (url.startsWith("https://")) {
         displayURL = url.substring(8);
@@ -81,8 +78,8 @@ function getTeamsAsHTML(team) {
     return `
         <tr>
             <td>${promotion}</td>
-            <td>${team.members}</td>
-            <td>${team.name}</td>
+            <td>${members}</td>
+            <td>${name}</td>
             <td><a href="${url}" target="_blank">${displayURL}</a></td>
             <td>
                 <a data-id="${id}" class="link-btn remove-btn">✖</a>
@@ -155,10 +152,9 @@ function formSubmit(e) {
             }
         });
     } else {
-        createTeamRequest(team).then(status => {
-            if (status.success) {
-                team.id = status.id;
-                //allTeams.push(team);
+        createTeamRequest(team).then(({ success, id }) => {
+            if (success) {
+                team.id = id;
                 allTeams = [...allTeams, team];
                 showTeams(allTeams);
                 $("#edit-form").reset();

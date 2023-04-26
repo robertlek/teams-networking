@@ -50,14 +50,11 @@ function updateTeamRequest(team) {
     }).then(r => r.json());
 }
 
-function deleteTeam(id) {
-    deleteTeamRequest(id, () => {
-        console.info("Callback successfully!");
-    }).then(status => {
-        if (status.success) {
-            loadTeams();
-        }
-    });
+async function deleteTeam(id) {
+    const status = await deleteTeamRequest(id);
+    if (status.success) {
+        loadTeams();
+    }
 }
 
 function startEditTeam(edit) {

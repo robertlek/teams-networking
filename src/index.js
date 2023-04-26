@@ -214,6 +214,17 @@ function loadTeams(callback) {
     });
 }
 
+(() => {
+    console.info("start");
+    sleep(3000).then(() => {
+        console.info("Ready to do %o", "next job");
+    });
+})();
+
+(function () {
+    console.info("START");
+})();
+
 function sleep(ms) {
     return new Promise(resolve => {
         setTimeout(() => {
@@ -221,10 +232,6 @@ function sleep(ms) {
         }, ms);
     });
 }
-
-sleep(3000).then(() => {
-    console.info("Ready to do %o", "next job");
-});
 
 loadTeams();
 initEvents();

@@ -182,15 +182,15 @@ function initEvents() {
     });
 }
 
-function loadTeams(callback) {
-    return getTeamsRequest().then(teams => {
-        allTeams = teams;
-        showTeams(teams);
+async function loadTeams(callback) {
+    const teams = await getTeamsRequest();
+    allTeams = teams;
+    showTeams(teams);
 
-        if (typeof callback === "function") {
-            callback();
-        }
-    });
+    if (typeof callback === "function") {
+        callback();
+    }
+    return teams;
 }
 
 (async () => {

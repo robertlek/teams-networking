@@ -51,9 +51,10 @@ function updateTeamRequest(team) {
 }
 
 async function deleteTeam(id) {
-    const status = await deleteTeamRequest(id);
-    if (status.success) {
-        loadTeams();
+    const { success } = await deleteTeamRequest(id);
+    if (success) {
+        allTeams = allTeams.filter(t => t.id !== id);
+        showTeams(allTeams);
     }
 }
 

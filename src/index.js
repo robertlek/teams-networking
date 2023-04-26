@@ -110,7 +110,7 @@ function $(selector) {
     return document.querySelector(selector);
 }
 
-function formSubmit(e) {
+async function formSubmit(e) {
     e.preventDefault();
 
     const team = {
@@ -139,14 +139,13 @@ function formSubmit(e) {
             }
         });
     } else {
-        createTeamRequest(team).then(({ success, id }) => {
-            if (success) {
-                team.id = id;
-                allTeams = [...allTeams, team];
-                showTeams(allTeams);
-                $("#edit-form").reset();
-            }
-        });
+        const status = await createTeamRequest(team);
+        if (status.success) {
+            team.id = status.id;
+            allTeams = [...allTeams, team];
+            showTeams(allTeams);
+            $("#edit-form").reset();
+        }
     }
 }
 

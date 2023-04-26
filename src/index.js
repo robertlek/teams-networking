@@ -120,6 +120,8 @@ async function formSubmit(e) {
         url: $("#project-url").value
     };
 
+    let changes = false;
+
     if (editId) {
         team.id = editId;
         const { success } = await updateTeamRequest(team);
@@ -134,18 +136,20 @@ async function formSubmit(e) {
                 }
                 return t;
             });
-
-            showTeams(allTeams);
-            $("#edit-form").reset();
+            changes = true;
         }
     } else {
         const { success, id } = await createTeamRequest(team);
         if (success) {
             team.id = id;
             allTeams = [...allTeams, team];
-            showTeams(allTeams);
-            $("#edit-form").reset();
+            changes = true;
         }
+    }
+
+    showTeams(allTeams);
+    if (changes) {
+        $("#edit-form").reset();
     }
 }
 

@@ -194,6 +194,10 @@ async function loadTeams(callback) {
 }
 
 (async () => {
+    $("#edit-form").classList.add("loading-mask");
+    await loadTeams();
+    $("#edit-form").classList.remove("loading-mask");
+
     console.info("start");
     sleep(6000).then(() => {
         console.info("Ready to do %o", "next job");
@@ -216,5 +220,4 @@ function sleep(ms) {
     });
 }
 
-loadTeams();
 initEvents();

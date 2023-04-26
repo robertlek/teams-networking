@@ -91,19 +91,19 @@ let previewDisplayedTeams = [];
 
 function showTeams(teams) {
     if (teams === previewDisplayedTeams) {
-        return;
+        return false;
     }
 
     if (teams.length === previewDisplayedTeams.length) {
         var eqContent = teams.every((t, i) => t === previewDisplayedTeams[i]);
         if (eqContent) {
-            console.warn("same content");
-            return;
+            return false;
         }
     }
     previewDisplayedTeams = teams;
     const html = teams.map(getTeamsAsHTML);
     $("table tbody").innerHTML = html.join("");
+    return true;
 }
 
 function $(selector) {
@@ -120,8 +120,6 @@ async function formSubmit(e) {
         url: $("#project-url").value
     };
 
-    let changes = false;
-
     if (editId) {
         team.id = editId;
         const { success } = await updateTeamRequest(team);
@@ -136,21 +134,16 @@ async function formSubmit(e) {
                 }
                 return t;
             });
-            changes = true;
         }
     } else {
         const { success, id } = await createTeamRequest(team);
         if (success) {
             team.id = id;
             allTeams = [...allTeams, team];
-            changes = true;
         }
     }
 
-    showTeams(allTeams);
-    if (changes) {
-        $("#edit-form").reset();
-    }
+    showTeams(allTeams) && $("#edit-form").reset();
 }
 
 function searchTeams(teams, search) {

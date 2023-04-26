@@ -93,7 +93,6 @@ let previewDisplayedTeams = [];
 
 function showTeams(teams) {
     if (teams === previewDisplayedTeams) {
-        console.info("same teams");
         return;
     }
 
@@ -127,16 +126,6 @@ function formSubmit(e) {
         team.id = editId;
         updateTeamRequest(team).then(status => {
             if (status.success) {
-                // allTeams = [...allTeams];
-                // var oldTeam = allTeams.find(t => t.id == team.id);
-                // oldTeam.promotion = team.promotion;
-                // oldTeam.members = team.members;
-                // oldTeam.name = team.name;
-                // oldTeam.url = team.url;
-                // loadTeams().then(() => {
-                //     $("#edit-form").reset();
-                // });
-
                 allTeams = allTeams.map(t => {
                     if (t.id === team.id) {
                         return {
@@ -158,10 +147,6 @@ function formSubmit(e) {
                 allTeams = [...allTeams, team];
                 showTeams(allTeams);
                 $("#edit-form").reset();
-                //
-                // loadTeams(() => {
-                //     $("#edit-form").reset();
-                // });
             }
         });
     }
@@ -214,11 +199,15 @@ function loadTeams(callback) {
     });
 }
 
-(() => {
+(async () => {
     console.info("start");
-    sleep(3000).then(() => {
+    sleep(6000).then(() => {
         console.info("Ready to do %o", "next job");
     });
+    console.warn("after sleep");
+
+    await sleep(5000);
+    console.info("await sleep");
 })();
 
 (function () {

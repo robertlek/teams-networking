@@ -122,26 +122,26 @@ async function formSubmit(e) {
 
     if (editId) {
         team.id = editId;
-        updateTeamRequest(team).then(status => {
-            if (status.success) {
-                allTeams = allTeams.map(t => {
-                    if (t.id === team.id) {
-                        return {
-                            ...t, // old props
-                            ...team
-                        };
-                    }
-                    return t;
-                });
+        const { success } = await updateTeamRequest(team);
 
-                showTeams(allTeams);
-                $("#edit-form").reset();
-            }
-        });
+        if (success) {
+            allTeams = allTeams.map(t => {
+                if (t.id === team.id) {
+                    return {
+                        ...t, // old props
+                        ...team
+                    };
+                }
+                return t;
+            });
+
+            showTeams(allTeams);
+            $("#edit-form").reset();
+        }
     } else {
-        const status = await createTeamRequest(team);
-        if (status.success) {
-            team.id = status.id;
+        const { success, id } = await createTeamRequest(team);
+        if (success) {
+            team.id = id;
             allTeams = [...allTeams, team];
             showTeams(allTeams);
             $("#edit-form").reset();

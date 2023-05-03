@@ -1,54 +1,8 @@
+import { getTeamsRequest, createTeamRequest, deleteTeamRequest, updateTeamRequest } from "./requests";
+import { $, sleep } from "./utils";
+
 let allTeams = [];
 var editId;
-
-function getTeamsRequest() {
-    return fetch("http://localhost:3000/teams-json", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(response => {
-        return response.json();
-    });
-}
-
-function createTeamRequest(team) {
-    return fetch("http://localhost:3000/teams-json/create", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(team)
-    }).then(r => r.json());
-}
-
-function deleteTeamRequest(id, successDelete) {
-    return fetch("http://localhost:3000/teams-json/delete", {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id })
-    })
-        .then(r => r.json())
-        .then(status => {
-            console.info("This team is being removed.", status);
-            if (typeof successDelete === "function") {
-                successDelete(status);
-            }
-            return status;
-        });
-}
-
-function updateTeamRequest(team) {
-    return fetch("http://localhost:3000/teams-json/update", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(team)
-    }).then(r => r.json());
-}
 
 async function deleteTeam(id) {
     const { success } = await deleteTeamRequest(id);
@@ -94,10 +48,6 @@ function showTeams(teams) {
     const html = teams.map(getTeamsAsHTML);
     $("table tbody").innerHTML = html.join("");
     return true;
-}
-
-function $(selector) {
-    return document.querySelector(selector);
 }
 
 async function formSubmit(e) {
@@ -146,9 +96,9 @@ function setFormValues({ promotion, members, name, url }) {
     $("#project-url").value = url;
 }
 
-function startEditTeam(edit) {
-    editId = edit;
-    const team = allTeams.find(({ id }) => id === edit);
+function startEditTeam(id) {
+    editId = id;
+    const team = allTeams.find(t => t.id === id);
     setFormValues(team);
 }
 
@@ -217,13 +167,5 @@ async function loadTeams(callback) {
 (function () {
     console.info("START");
 })();
-
-function sleep(ms) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve();
-        }, ms);
-    });
-}
 
 initEvents();

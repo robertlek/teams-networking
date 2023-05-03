@@ -58,16 +58,6 @@ async function deleteTeam(id) {
     }
 }
 
-function startEditTeam(edit) {
-    editId = edit;
-    const { promotion, members, name, url } = allTeams.find(({ id }) => id === edit);
-
-    $("#promotion").value = promotion;
-    $("#members").value = members;
-    $("#project-name").value = name;
-    $("#project-url").value = url;
-}
-
 function getTeamsAsHTML({ id, url, promotion, members, name }) {
     let displayURL = url;
     if (url.startsWith("https://")) {
@@ -112,13 +102,7 @@ function $(selector) {
 
 async function formSubmit(e) {
     e.preventDefault();
-
-    const team = {
-        promotion: $("#promotion").value,
-        members: $("#members").value,
-        name: $("#project-name").value,
-        url: $("#project-url").value
-    };
+    const team = getFormValues();
 
     if (editId) {
         team.id = editId;
@@ -144,6 +128,28 @@ async function formSubmit(e) {
     }
 
     showTeams(allTeams) && $("#edit-form").reset();
+}
+
+function getFormValues() {
+    return {
+        promotion: $("#promotion").value,
+        members: $("#members").value,
+        name: $("#project-name").value,
+        url: $("#project-url").value
+    };
+}
+
+function setFormValues({ promotion, members, name, url }) {
+    $("#promotion").value = promotion;
+    $("#members").value = members;
+    $("#project-name").value = name;
+    $("#project-url").value = url;
+}
+
+function startEditTeam(edit) {
+    editId = edit;
+    const team = allTeams.find(({ id }) => id === edit);
+    setFormValues(team);
 }
 
 function searchTeams(teams, search) {
